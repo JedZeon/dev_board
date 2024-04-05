@@ -1,4 +1,6 @@
 from django.db import models
+from django.urls import reverse
+
 from users.models import User
 
 
@@ -37,6 +39,9 @@ class Post(models.Model):
 
     def get_view_count(self):
         return ViewPosts.objects.filter(post=self).count()
+
+    def get_absolute_url(self):
+        return reverse('posts:post_update', args=[str(self.id)])
 
 
 class Category(models.Model):

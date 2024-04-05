@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% load custom_tags %}
+
+{% block title %}
+    Добавление публикации
+{% endblock title %}
+
+{% block content %}
+
+    <article class="story">
+        <div class="container">
+            <div class="story__main">
+                <header class="story__header">
+                    <div class="story__user">
+                        <div class="story__user-info">
+                            <a class="story__user-link user__nick" href="#">
+                                <div class="avatar avatar_small">
+                                <span class="avatar__inner">
+                                    <img src="{% static 'img/baseavatar.jpg' %}" alt="" class="image-loaded">
+                                </span>
+                                </div>
+                                {{ post.author }}
+                            </a>
+                            <div>
+                                <time datetime="{{ post.created_at }}"
+                                      class="caption story__datetime">{{ post.created_at }}</time>
+                            </div>
+
+                        </div>
+                    </div>
+                    <h4 class="story__title">
+                        <h4> {{ post.title }} </h4>
+                    </h4>
+                </header>
+                <div class="story__content-wrapper">
+                    <div class="story__content story__typography" style="display: block">
+                        <div class="story__content-inner">
+                            <div class="story-block story-block_type_text">
+                                <p>{{ post.content|safe }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="story__footer" style="font-size: 30px">
+                        <div class="story__tools">
+                            <div class="comment">
+                                <i class="fa fa-comments"></i>
+                                <span style="margin-left: 10px; line-height: 15px;"> {{ post.get_reply_count }} </span>
+                            </div>
+                            <div class="view">
+                                <i style="margin-left: 10px;" class="fa fa-eye"></i>
+                                <span style="margin-left: 10px; line-height: 15px;"
+                                      class="story__views-count">{{ post.get_view_count }}</span>
+                            </div>
+                        </div>
+                        <div>
+                            {% if is_authors %}
+                                <a class="btn btn-light" href="{% url 'posts:post_update' post.id %}">Изменить</a>
+                                <a class="btn btn-light" href="{% url 'posts:post_delete' post.id %}">Удалить</a>
+                            {% endif %}
+                            <a class="btn btn-light" href="{{ request.META.HTTP_REFERER }}">Назад</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div id="replies" class="story-comments section-group">
+                <div class="story-comments__all section-group">
+                    <form class="d-flex" action="{% url 'posts:reply_add' post.id %}" method="post">
+                        {% csrf_token %}
+                        <input class="form-control me-2" type="search" placeholder="Введите отклик"
+                               aria-label="Search"
+                               name="content">
+                        <button class="btn" style="background: #e53637; color: white;" type="submit">Отправить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </article>
+{% endblock content %}

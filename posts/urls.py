@@ -6,7 +6,6 @@ app_name = 'posts'
 urlpatterns = [
     path("", views.PostList.as_view(), name="index"),
     path('search/', views.PostList.as_view(), name='search'),
-    # path('<int:category_id>', views.post_list, name='post_list'),
     path('post/post_create/', views.PostCreate.as_view(), name='post_create'),
     path('post/<int:post_id>/', views.PostDetail.as_view(), name="post_detail"),
     path('post/<int:post_id>/edit/', views.PostUpdate.as_view(), name='post_update'),

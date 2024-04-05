@@ -63,12 +63,21 @@ class PostUpdate(UpdateView):
     form_class = PostForm
     model = Post
     template_name = 'posts/post_edit.html'
+    pk_url_kwarg = 'post_id'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title_page'] = 'Изменение публикации'
+        context['categories'] = Category.objects.all()
+
+        return context
 
 
 class PostDelete(DeleteView):
     model = Post
     template_name = 'posts/post_delete.html'
     success_url = '/'
+    pk_url_kwarg = 'post_id'
 
 
 class PostDetail(DetailView):
@@ -86,6 +95,15 @@ class PostDetail(DetailView):
             cache.set(f'post-{self.kwargs["post_id"]}', obj)
 
         return obj
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        post = Post.objects.get(pk=self.kwargs['post_id'])
+
+        context['post'] = post
+        context['is_authors'] = post.author = self.request.user
+        return context
 
 
 @login_required()
@@ -141,7 +159,7 @@ def reply_add(request, post_id, **kwargs):
             reply.post = Post.objects.get(id=post_id)
             reply.author = request.user
             reply.save()
-            return HttpResponseRedirect(reverse('posts:post_detail', args=[reply.post.slug]))
+            return HttpResponseRedirect(reverse('posts:post_detail', args=[reply.post.id]))
     else:
         form = ReplyForm()
 
