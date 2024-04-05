@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
     {{ title_page }}
@@ -13,9 +14,11 @@
                 <div class="text-start mt-5">
                     <form action="" method="post">
                         {% csrf_token %}
+                        {{ form.media }}
+{#                        {{ form.as_p }}#}
 
-                        <div class="col-md-12 mb-3">
-                            <label for="id_category" class="form-label">Категория*</label>
+                        <div class="col-md-12 mb-3 ">
+                            <label for="id_category" class="form-label" style="color: white">Категория*</label>
                             <select id="id_category" name="category" required>
                                 {% for category in categories %}
                                     <option value="{{ category.id }}"
@@ -39,17 +42,18 @@
                                 <div class="alert alert-danger alert-dismissible fade show">{{ form.title.errors }}</div>
                             {% endif %}
                         </div>
-                        <div class="col-md-12 mb-3" style="color: white">
-                            <label for="id_content" class="form-label">Содержание:</label>
-                            <textarea name="content" class="form-control"
-                                      cols="40" rows="10" required id="id_content"
-                                      placeholder="Введите текст публикации">
-                                {{ post.content }}
-                            </textarea>
-                            {% if form.content.errors %}
-                                <div class="alert alert-danger alert-dismissible fade show">{{ form.content.errors }}</div>
-                            {% endif %}
-                        </div>
+                        {{ form.content }}
+{#                        <div class="col-md-12 mb-3" style="color: white">#}
+{#                            <label for="id_content" class="form-label">Содержание:</label>#}
+{#                            <textarea name="content" class="form-control django_ckeditor_5"#}
+{#                                      cols="40" rows="10" required id="id_content"#}
+{#                                      placeholder="Введите текст публикации">#}
+{#                                {{ form.content|safe }}#}
+{#                            </textarea>#}
+{#                            {% if form.content.errors %}#}
+{#                                <div class="alert alert-danger alert-dismissible fade show">{{ form.content.errors }}</div>#}
+{#                            {% endif %}#}
+{#                        </div>#}
                         <button type="submit" class="btn btn-success">
                             <span class="glyphicon glyphicon-ok"></span>Сохранить
                         </button>

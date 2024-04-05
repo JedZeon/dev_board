@@ -72,6 +72,9 @@ class PostUpdate(UpdateView):
 
         return context
 
+    def get_success_url(self):
+        return reverse('posts:post_detail', kwargs={'post_id': self.kwargs['post_id']})
+
 
 class PostDelete(DeleteView):
     model = Post

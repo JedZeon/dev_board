@@ -1,12 +1,13 @@
 from django.db import models
 from django.urls import reverse
-
 from users.models import User
+from django_ckeditor_5.fields import CKEditor5Field
 
 
 class Post(models.Model):
     title = models.CharField(max_length=100, verbose_name='Заголовок')
-    content = models.TextField(verbose_name='Содержание')
+    # content = models.TextField(verbose_name='Содержание')
+    content = CKEditor5Field(verbose_name='Содержание', config_name='extends', blank=True)
     created_at = models.DateTimeField(verbose_name='Создан', auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     category = models.ForeignKey('Category', on_delete=models.CASCADE)
