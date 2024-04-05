@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Новый отзыв</title>
+</head>
+<body>
+<section>
+    <p>Здравствуй {{ username }}.</p>
+    <hr>
+    <p>На вашу публикацию</p>
+    <a href="{% url 'posts:post_detail' post.id %}">{{ post.title }}</a>
+    <p>получен новый отзыв</p>
+    <hr>
+    <p>{{ content }}</p>
+</section>
+</body>
+</html>

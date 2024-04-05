@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Users registration
+{% endblock title %}
+{% block content %}
+    <!-- Normal Breadcrumb Begin -->
+    <section class="normal-breadcrumb set-bg" data-setbg="{% static 'img/normal-breadcrumb.jpg' %}">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="normal__breadcrumb__text">
+                        <h2>{{ title }}</h2>
+                        <p>Добро пожаловать</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Normal Breadcrumb End -->
+
+    <!-- Signup Section Begin -->
+    <section class="signup spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="login__form">
+                        <h3>Регистрация</h3>
+                        <form action="{% url 'user:registration' %}" method="post">
+                            {% csrf_token %}
+                            <div class="input__item">
+                                <input type="text"
+                                       value="{% if form.email.value %}{{ form.email.value }}{% endif %}"
+                                       placeholder="Email address"
+                                       name="email"
+                                       required
+                                >
+                                <span class="icon_mail"></span>
+                                {% if form.email.errors %}
+                                    <div class="alert alert-danger alert-dismissible fade show">{{ form.email.errors }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="input__item">
+                                <input type="text"
+                                       value="{% if form.username.value %}{{ form.username.value }}{% endif %}"
+                                       placeholder="Введите имя"
+                                       name="username"
+                                       required
+                                >
+                                <span class="icon_profile"></span>
+                                {% if form.username.errors %}
+                                    <div class="alert alert-danger alert-dismissible fade show">{{ form.username.errors }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="input__item">
+                                <input type="password" placeholder="Пароль" name="password1">
+                                <span class="icon_lock"></span>
+                                {% if form.password1.errors %}
+                                    <div class="alert alert-danger alert-dismissible fade show">{{ form.password1.errors }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="input__item">
+                                <input type="password" placeholder="Подтвердите пароль" name="password2">
+                                <span class="icon_lock"></span>
+                                {% if form.password2.errors %}
+                                    <div class="alert alert-danger alert-dismissible fade show">{{ form.password2.errors }}</div>
+                                {% endif %}
+                            </div>
+                            <button type="submit" class="site-btn">Зарегистрироваться</button>
+                        </form>
+                        <h5>Вы уже зарегистрированы? <a href="{% url 'user:login' %}">Войдите!</a></h5>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="login__social__links">
+                        <h3>Информация:</h3>
+                        <p style="color: white">Вам на почту будет оправлен код подтверждения регистрации.</p>
+                        <p style="color: white">Проверяйте почту.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Signup Section End -->
+
+
+{% endblock content %}

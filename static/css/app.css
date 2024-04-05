@@ -1,0 +1,584 @@
+#mo_bg {
+    width: 100%;
+    height: 30vh;
+    background: url("../img/hero-bg.jpg") top center;
+    background-size: cover;
+    margin-bottom: -200px;
+}
+
+#mo_bg .container {
+    position: relative;
+}
+
+#mo_bg h1 {
+    margin: 0;
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 56px;
+    text-transform: uppercase;
+    color: #2c4964;
+}
+
+#mo_bg h2 {
+    color: #2c4964;
+    margin: 10px 0 0 0;
+    font-size: 24px;
+}
+
+#mo_bg .btn-get-started {
+    font-family: "Raleway", sans-serif;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 1px;
+    display: inline-block;
+    padding: 12px 35px;
+    margin-top: 30px;
+    border-radius: 50px;
+    transition: 0.5s;
+    color: #fff;
+    background: #1977cc;
+}
+
+#mo_bg .btn-get-started:hover {
+    background: #3291e6;
+}
+
+
+:root {
+    --color-black-430: #f3f4f5;
+    --color-black-700: #70737b;
+    --color-black-600: #b0b3bb;
+    --color-black-800: #444850;
+    --color-bright-800: #ffffff;
+}
+
+ul {
+    text-align: left;
+}
+
+section {
+    padding: 30px;
+    overflow: hidden;
+}
+
+html.redesign .story__footer .story__comments-link .story__comments-link-count {
+    margin-left: 8px;
+    line-height: 20px
+}
+
+.post_news {
+    display: flex;
+    flex-wrap: wrap;
+    /*margin: 10px;*/
+    padding: 10px;
+    border-bottom: 1px solid #d1e6f9;
+    /*border-radius: 6px;*/
+
+}
+
+.story__main {
+    min-height: 75px;
+    width: 100%;
+    border: 1px solid var(--color-black-430);
+    border-radius: 8px;
+    background-color: white;
+    box-sizing: border-box;
+    animation-duration: 2000ms;
+    animation-fill-mode: forwards;
+}
+
+.story__header {
+    padding: 15px 23px 16px;
+    position: relative;
+}
+
+.story__user {
+    display: flex;
+    justify-content: space-between;
+    margin-right: 32px;
+    color: var(--color-black-800);
+    margin-bottom: 8px;
+    line-height: 17px;
+    font-size: 13px;
+}
+
+.story__user-info {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    font-size: 13px;
+    line-height: 20px;
+}
+
+.story__user-link {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    margin-right: 4px;
+}
+
+.user__nick {
+    display: inline-block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-weight: 500;
+    font-size: 13px;
+    color: var(--color-black-800);
+    font-variant-ligatures: no-common-ligatures;
+}
+
+.user .avatar {
+    vertical-align: middle;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.avatar_small {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+    position: relative;
+    overflow: hidden;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/*.avatar {*/
+/*    display: inline-block;*/
+/*    width: 36px;*/
+/*    height: 36px;*/
+/*    position: relative;*/
+/*    z-index: 1;*/
+/*    border-radius: 100%;*/
+/*    overflow: hidden;*/
+/*}*/
+
+.avatar_note .avatar__inner {
+    display: inline-block;
+    line-height: 0;
+    overflow: hidden;
+    border-radius: 100%;
+    -webkit-mask-image: -webkit-radial-gradient(circle, #fff 100%, #000 100%);
+}
+
+.avatar__inner {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+img.image-loaded {
+    opacity: 1;
+}
+
+.story__datetime {
+    margin-right: 20px;
+    font-size: inherit;
+    line-height: inherit;
+    padding-left: 4px;
+    white-space: nowrap;
+}
+
+.caption, .users-list__posts-count {
+    font-size: 12px;
+    line-height: 18px;
+    font-weight: 400;
+    color: var(--color-black-700);
+}
+
+.story__title, .client-mention .comments__title {
+    display: block;
+    cursor: pointer;
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: 400;
+}
+
+.story__content-wrapper {
+    position: relative;
+}
+
+.story__typography {
+    line-height: 24px;
+    text-align: left;
+}
+
+.story__content {
+    position: relative;
+    box-sizing: border-box;
+}
+
+.story__content-inner {
+    overflow: hidden;
+    position: relative;
+}
+
+.story-block_type_text {
+    padding: 0 24px;
+    z-index: 1;
+}
+
+.story-block {
+    overflow: hidden;
+}
+
+.story__footer {
+    font-size: 13px;
+    line-height: 36px;
+    overflow: hidden;
+    height: 52px;
+    padding: 8px 24px;
+    border-top: 1px solid var(--color-black-430);
+    border-radius: 0 0 8px 8px;
+    /*background-color: var(--color-bright-800);*/
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.story__tools {
+    font-size: 13px;
+    line-height: 15px;
+    color: var(--color-black-700);
+    overflow: hidden;
+    display: flex;
+    min-height: 25px;
+    align-items: stretch;
+    flex-shrink: 0;
+}
+
+.story__comments-link {
+    position: relative;
+    color: var(--color-black-700);
+}
+
+.story__comments-link, .story__share, .story__ruble, .story__save, .story__donate {
+    overflow: hidden;
+    margin-right: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    background: 0 0;
+}
+
+.story__comments-link-icon {
+    position: relative;
+}
+
+.story__share-count, .story__comments-link-count {
+    margin-left: 10px;
+    line-height: 15px;
+}
+
+.icon--ui__comments {
+    fill: var(--color-black-600);
+    position: relative;
+    top: 1px;
+}
+
+.icon--ui__comments {
+    width: 16px;
+    height: 16px;
+}
+
+
+.story__views {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: var(--color-black-700);
+    margin: 0 24px 0 0;
+}
+
+.story__views-icon {
+    margin-right: 6px;
+    height: 16px;
+    display: block;
+    position: relative;
+}
+
+.story {
+    position: relative;
+    width: 100%;
+    margin-top: 15px;
+}
+
+.story-comments {
+    position: relative;
+}
+
+.section-group {
+    margin-top: 15px;
+}
+
+.story-comments__all {
+    margin-top: 0;
+}
+
+.story-comments__all > section:first-child, .story-comments__author {
+    transition: max-height 1s ease, padding 200ms ease;
+    margin-top: 0;
+    border-radius: 0;
+    border-top-color: transparent;
+}
+
+.comment__content {
+    overflow: hidden;
+    margin: 0 0 4px 8px;
+    word-wrap: break-word;
+    line-height: 24px;
+    text-wrap: pretty;
+}
+
+.comment__control {
+    vertical-align: inherit;
+    margin-right: 15px;
+    text-transform: none;
+    text-align: inherit;
+    font-weight: 400;
+}
+
+.comment__controls {
+    font-size: 13px;
+    color: var(--color-black-700);
+    line-height: 20px;
+    min-height: 20px;
+    display: flex;
+    -webkit-user-select: none;
+    user-select: none;
+    margin: 4px 0
+}
+
+.comment__controls-inner {
+    display: flex
+}
+
+.button_link {
+    cursor: pointer;
+    background-color: transparent;
+    color: var(--color-primary-900);
+    border: 0;
+    height: auto;
+    padding: 0;
+    font-size: 13px;
+    line-height: 20px
+}
+
+.button_link:hover {
+    background-color: transparent
+}
+
+.comment__body {
+    transition: 200ms ease-out;
+    padding: 2px 0;
+}
+
+.comment__header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    line-height: 0;
+    cursor: default;
+    margin-bottom: 8px;
+    color: var(--color-black-700);
+    font-size: 13px;
+    font-weight: 400
+}
+
+.comment__rating-up, .comment__rating-down {
+    flex-shrink: 0;
+    min-height: 24px;
+    background-color: var(--color-black-300);
+    border-radius: 8px;
+    display: flex;
+    padding: 2px 8px;
+    cursor: pointer
+}
+
+.comment__rating-up {
+    margin-right: 8px
+}
+
+.comments .icon {
+    -webkit-user-select: none;
+    user-select: none;
+    pointer-events: none
+}
+
+.comment__rating-count {
+    font-size: 13px;
+    line-height: 20px;
+    font-weight: 500;
+    flex-shrink: 0;
+    color: var(--color-black-700)
+}
+
+.comment__rating-count svg {
+    display: block
+}
+
+.comment__rating-up, .comment__rating-down {
+    flex-shrink: 0;
+    min-height: 24px;
+    background-color: var(--color-black-300);
+    border-radius: 8px;
+    display: flex;
+    padding: 2px 8px;
+    cursor: pointer
+}
+
+.comment__rating-up svg, .comment__rating-down svg {
+    width: 16px;
+    height: 16px;
+    margin-top: 2px;
+    transition: fill 200ms ease-out;
+    pointer-events: none
+}
+
+.comment__user {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    margin-left: 12px;
+    overflow: hidden
+}
+
+.user {
+    display: inline-block
+}
+
+.comment__datetime {
+    font-size: 13px;
+    line-height: 20px;
+    font-weight: 400;
+    min-width: 20px;
+    margin-left: 8px;
+    color: var(--color-black-700);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: opacity 200ms ease-out;
+    flex-shrink: 1;
+}
+
+.padding {
+    /*margin: 0 auto;*/
+    /*display: inline-block*/
+    text-align: center;
+}
+
+
+/* **************/
+/*Модальное окно с затемнением всего*/
+/* **************/
+#zatemnenie {
+    background: rgba(102, 102, 102, 0.5);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+}
+
+#okno {
+    width: 300px;
+    height: 50px;
+    text-align: center;
+    padding: 15px;
+    border: 3px solid #0000cc;
+    border-radius: 10px;
+    color: #0000cc;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    background: #fff;
+    z-index: 1000;
+}
+
+#zatemnenie:target {
+    display: block;
+    z-index: 1000;
+}
+
+.close {
+    display: inline-block;
+    border: 1px solid #0000cc;
+    color: #0000cc;
+    padding: 0 12px;
+    margin: 10px;
+    text-decoration: none;
+    background: #f2f2f2;
+    font-size: 14pt;
+    cursor: pointer;
+}
+
+.close:hover {
+    background: #e6e6ff;
+}
+
+/*Использование*/
+/*<div id="zatemnenie">*/
+/*    <div id="okno">*/
+/*        Всплывающее окошко!<br>*/
+/*        <a href="#" class="close">Закрыть окно</a>*/
+/*    </div>*/
+/*</div>*/
+
+/*<a href="#zatemnenie">Вызвать всплывающее окно</a>*/
+/* **************/
+
+/**
+* Всплывающее окно
+*/
+#main_eye {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20%;
+    height: 100%;
+    z-index: 50;
+    display: none;
+}
+
+#okno_eye {
+    width: auto;
+    height: 50px;
+    text-align: center;
+    padding: 15px;
+    border: 3px solid #d5e1ed;
+    /*border-radius: 4px;*/
+    color: #0000cc;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    transition: all 0.3s ease-in-out;
+    background: #f1f7fd;
+}
+
+#main_eye:target {
+    display: block;
+}
+
+#scaled_size_text_1:active {
+    font-size: 1em;
+}
+#scaled_size_text_2:active {
+    font-size: 2em;
+}
+#scaled_size_text_3:active {
+    font-size: 3em;
+}

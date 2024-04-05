@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+    Posts
+{% endblock title %}
+
+{% block content %}
+    <!-- Hero Section Begin -->
+    {% if news_list %}
+        <section class="hero">
+            <div class="container">
+                <div class="hero__slider owl-carousel">
+                    {% for news in news_list %}
+
+                        <div class="hero__items set-bg"
+                                {% if news.image %}
+                             data-setbg="{{ news.image.url }}"
+                                {% else %}
+                             data-setbg="{% static 'img/hero/hero-1.jpg' %}"
+                                {% endif %}>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="hero__text">
+                                        <h2 style="-webkit-text-stroke-width: 1px; -webkit-text-stroke-color: #0b0c2a">
+                                            {{ news.title|truncatewords:20|safe }}
+                                        </h2>
+                                        <p>{{ news.content|truncatewords:20|safe }}</p>
+                                        <a href="{% url 'posts:post_detail' news.slug %}"><span>Подробней...</span>
+                                            <i class="fa fa-angle-right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+        <!-- Hero Section End -->
+    {% endif %}
+
+    <section id="posts">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+
+                    <div class="section-title">
+                        {% if category %}
+                            <h4>{{ category }}</h4>
+                        {% else %}
+                            <h4>{{ title }}</h4>
+                        {% endif %}
+                    </div>
+
+                    {% include 'includes/in_posts.html' %}
+
+                </div>
+                <div class="section-title">
+                    <h4>Принятые отзывы</h4>
+
+<!--                    {% include 'includes/replies_post.html' %}-->
+
+                </div>
+            </div>
+        </div>
+    </section> <!-- End Posts Section -->
+    <footer class="footer">
+        <div class="page-up">
+            <a href="#" id="scrollToTopButton"><span class="arrow_carrot-up"></span></a>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="footer__logo">
+                        <a href="/"><img src="{% static 'img/logo.png' %}" alt=""></a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="footer__nav">
+                        <ul>
+                            <li class="active"><a href="/">Главная</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        Copyright ©
+                        <script>document.write(new Date().getFullYear());</script>
+                        2024
+                        All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i>
+                        by
+                        <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+
+                </div>
+            </div>
+        </div>
+    </footer>
+{% endblock content %}

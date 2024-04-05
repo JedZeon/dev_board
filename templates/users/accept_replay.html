@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Изменился статус вашего отзыва</title>
+</head>
+<body>
+<section>
+    <p>Здравствуй {{ username }}.</p>
+    <hr>
+    <p>Ваш отзыв на публикацию:</p>
+    <a href="{% url 'posts:post_detail' post.id %}">{{ post.title }}</a>
+    <hr>
+    {% if is_accepted %}
+        <h3>Принят</h3>
+    {% else %}
+        <h3>Не принят</h3>
+    {% endif %}
+    <hr>
+    <p>{{ content }}</p>
+</section>
+</body>
+</html>

@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ title_page }}
+{% endblock title %}
+
+{% block content %}
+<section id="post-add">
+    <div class="container">
+        <h3 style="color: white">{{ title_page }}</h3>
+        <hr>
+        <div>
+            <div class="text-start mt-5">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <!--                    {{ form.as_p }}-->
+                    <div class="col-md-12 mb-3">
+                        <label for="id_category" class="form-label">Категория*</label>
+                        <select id="id_category" name="category" required>
+                            {% for category in categories %}
+                            <option value="{{ category.id }}" {% if form.category.id == category.id %}selected{% endif %}>
+                                {{ category.name }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                        {% if form.category.errors %}
+                        <div class="alert alert-danger alert-dismissible fade show">{{ form.category.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-12 mb-3" style="color: white">
+                        <label for="id_title" class="form-label">Заголовок:</label>
+                        <input type="text" class="form-control" id="id_title"
+                               name="title"
+                               placeholder="Введите заголовок"
+                               value="{% if form.title.value %}{{ form.title.value }}{% endif %}"
+                               required>
+                        {% if form.title.errors %}
+                        <div class="alert alert-danger alert-dismissible fade show">{{ form.title.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-12 mb-3" style="color: white">
+                        <label for="id_content" class="form-label">Содержание:</label>
+                        <textarea name="content" class="form-control"
+                                  cols="40" rows="10" required id="id_content"
+                                  placeholder="Введите текст публикации">
+                                {% if form.content.value %}
+                                    {{ form.content.value }}
+                                {% endif %}
+                        </textarea>
+                        {% if form.content.errors %}
+                        <div class="alert alert-danger alert-dismissible fade show">{{ form.content.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <button type="submit" class="btn btn-success">
+                        <span class="glyphicon glyphicon-ok"></span>Сохранить
+                    </button>
+                    <a class="glyphicon glyphicon-ok" href="{{ request.META.HTTP_REFERER }}">Назад</a>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+{% endblock content %}
