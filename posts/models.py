@@ -5,6 +5,9 @@ from django_ckeditor_5.fields import CKEditor5Field
 
 
 class Post(models.Model):
+    """
+    модель публикаций / объявлений
+    """
     title = models.CharField(max_length=100, verbose_name='Заголовок')
     # content = models.TextField(verbose_name='Содержание')
     content = CKEditor5Field(verbose_name='Содержание', config_name='extends', blank=True)
@@ -46,6 +49,9 @@ class Post(models.Model):
 
 
 class Category(models.Model):
+    """
+    Модель категорий
+    """
     name = models.CharField(max_length=150)
 
     class Meta:
@@ -93,6 +99,7 @@ class Reply(models.Model):
 class PostLikes(models.Model):
     """
     Модель регистрации лайка/дизлайка публикации
+    Чтобы один и тот же пользователь не мог 100500 раз лайкать 1 объявление
     """
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)

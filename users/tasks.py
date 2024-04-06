@@ -27,5 +27,4 @@ def send_message_every_weekly_new_post(test=False):
     """
     Рассылка новостей
     """
-    print(f'Рассылка новостей')
-    # send_message_weekly(test=test)
+    send_message_weekly(test=test)

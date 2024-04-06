@@ -1,9 +1,11 @@
 from datetime import datetime, timedelta
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
 from django.utils.timezone import make_aware
 
 from posts.models import Post
+from users.models import User
 
 
 def send_message_html(to, subject='', message='', html_message='', test=False):
@@ -45,37 +47,29 @@ def send_message_weekly(test=False):
 
     # Получаем все посты за прошедшую неделю
     week_start = make_aware(datetime.now() - timedelta(days=7))
-    posts = Post.objects.filter(created_at__gte=week_start)
-    print(f'новостей: {posts.count()}')
+    posts = Post.objects.filter(created_at__gte=week_start, is_news=True)
+    # print(f'новостей: {posts.count()}')
     if posts.count() > 0:
-        print(f"Старт еженедельной рассылки, новостей: {posts.count() }")
+        print(f"Старт еженедельной рассылки, новостей: {posts.count()}")
 
-        # Список категорий в которых были новости
-        categories_ = set(posts.values_list('categories__name', flat=True))
-        # Все подписанные юзвери в этих категориях
-        sub_users = set(
-            UserCategory.objects.filter(category__name__in=categories_).values_list('user', flat=True))
-        for sub_user in sub_users:
-            cat_users = set(UserCategory.objects.filter(user=sub_user).values_list('category__name', flat=True))
-            posts_user = posts.filter(categories__name__in=cat_users)
-
-            user_ = User.objects.get(id=sub_user)
-            if user_.email:
+        users = User.objects.all()
+        for user in users:
+            if user.email:
                 html_context = render_to_string(
-                    'message_week_post.html',
+                    'users/message_week_post.html',
                     {
-                        'posts_user': posts_user,
-                        'user_': user_,
+                        'posts_user': posts,
+                        'user_': user.username,
                         'SITE_URL': settings.SITE_URL,
-                        'cat_users': cat_users
+                        'cat_users': []
                     }
                 )
 
-                # print(html_context)
                 send_message_html(
-                    to=[user_.email],
+                    to=[user.email],
                     subject='Новые статьи за неделю.',
                     html_message=html_context,
                     test=test
                 )
                 print('Отправлено')
+

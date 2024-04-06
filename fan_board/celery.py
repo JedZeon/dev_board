@@ -14,6 +14,7 @@ TEST = False
 app.conf.beat_schedule = {
     'send_message_every_weekly_new_post': {
         'task': 'users.tasks.send_message_every_weekly_new_post',
+        # раз в неделю в 8 часов, понедельник
         'schedule': crontab(hour=8, minute=0, day_of_week='monday'),
         # каждые 10 сек для проверки корректности настроек
         # 'schedule': 10,
@@ -21,6 +22,7 @@ app.conf.beat_schedule = {
     },
     'clear_one_time_code': {
         'task': 'users.tasks.clear_one_time_code',
+        # Ежедневная чистка одноразовых кодов
         'schedule': crontab(hour=8, minute=0),
         # каждые 10 сек для проверки корректности настроек
         # 'schedule': 10,

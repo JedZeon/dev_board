@@ -1,7 +1,12 @@
 Доска объявлений фан ММОРПГ
 
 
+
 ****************************************************************
+
+pip install redis
+pip install -U "celery[redis]"
+
 Для запуска периодических задач на Windows запустите в разных окнах терминала:
 celery -A fan_board worker -l INFO --pool=solo
 и
