@@ -6,14 +6,6 @@ from users.utils import send_message_weekly
 
 
 @shared_task
-def send_message_every_weekly_new_post(test=False):
-    """
-    Рассылка новостей
-    """
-    send_message_weekly(test=test)
-
-
-@shared_task
 def clear_one_time_code(test=False):
     """
     Чистка таблицы OneTimeCode от зависших кодов (существуют более 1 дня)
@@ -28,3 +20,12 @@ def clear_one_time_code(test=False):
         for code in codes:
             if (current_date - code.created_at).days > 1:
                 code.delete()
+
+
+@shared_task
+def send_message_every_weekly_new_post(test=False):
+    """
+    Рассылка новостей
+    """
+    print(f'Рассылка новостей')
+    # send_message_weekly(test=test)

@@ -14,7 +14,7 @@ class Post(models.Model):
     likes = models.IntegerField(default=0, verbose_name='+')
     dislikes = models.IntegerField(default=0, verbose_name='-')
     rating = models.IntegerField(default=0, verbose_name='рейтинг')
-    image = models.ImageField(verbose_name='Изображение', blank=True)
+    image = models.ImageField(verbose_name='Изображение, для новостей', blank=True)
     is_news = models.BooleanField(default=False, verbose_name='Это новость')
 
     class Meta:

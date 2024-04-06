@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load cache %}
 {% load static %}
 
 {% block title %}
@@ -8,38 +8,41 @@
 
 {% block content %}
     <!-- Hero Section Begin -->
-    {% if news_list %}
-        <section class="hero">
-            <div class="container">
-                <div class="hero__slider owl-carousel">
-                    {% for news in news_list %}
+    {% cache 60 news_list %}
+        {% if news_list %}
+            <section class="hero">
+                <div class="container">
+                    <div class="hero__slider owl-carousel">
+                        {% for news in news_list %}
 
-                        <div class="hero__items set-bg"
-                                {% if news.image %}
-                             data-setbg="{{ news.image.url }}"
-                                {% else %}
-                             data-setbg="{% static 'img/hero/hero-1.jpg' %}"
-                                {% endif %}>
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="hero__text">
-                                        <h2 style="-webkit-text-stroke-width: 1px; -webkit-text-stroke-color: #0b0c2a">
-                                            {{ news.title|truncatewords:20|safe }}
-                                        </h2>
-                                        <p>{{ news.content|truncatewords:20|safe }}</p>
-                                        <a href="{% url 'posts:post_detail' news.slug %}"><span>Подробней...</span>
-                                            <i class="fa fa-angle-right"></i></a>
+                            <div class="hero__items set-bg"
+                                    {% if news.image %}
+                                 data-setbg="{{ news.image.url }}"
+                                    {% else %}
+                                 data-setbg="{% static 'img/hero/hero-1.jpg' %}"
+                                    {% endif %}>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="hero__text">
+                                            <h2 style="-webkit-text-stroke-width: 1px; -webkit-text-stroke-color: #0b0c2a">
+                                                {{ news.title|truncatewords:20|safe }}
+                                            </h2>
+                                            <p>{{ news.content|truncatewords:20|safe }}</p>
+                                            <a href="{% url 'posts:post_detail' news.id %}"><span>Подробней...</span>
+                                                <i class="fa fa-angle-right"></i></a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                    {% endfor %}
+                        {% endfor %}
+                    </div>
                 </div>
-            </div>
-        </section>
-        <!-- Hero Section End -->
-    {% endif %}
+            </section>
+            <!-- Hero Section End -->
+
+        {% endif %}
+    {% endcache %}
 
     <section id="posts">
         <div class="container">
@@ -59,13 +62,15 @@
                 </div>
                 <div class="section-title">
                     <h4>Принятые отзывы</h4>
-
-<!--                    {% include 'includes/replies_post.html' %}-->
+                    <div style="margin-top: 25px">
+                        {% include 'includes/replies_post.html' %}
+                    </div>
 
                 </div>
             </div>
         </div>
-    </section> <!-- End Posts Section -->
+    </section>
+    <!-- End Posts Section -->
     <footer class="footer">
         <div class="page-up">
             <a href="#" id="scrollToTopButton"><span class="arrow_carrot-up"></span></a>

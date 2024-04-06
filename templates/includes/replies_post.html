@@ -1,0 +1,94 @@
+{% load static %}
+{% load custom_tags %}
+
+<section class="comments" style="padding: 5px">
+    <div class="comments__container">
+        {% for reply in replies %}
+            <div class="comment" style="background: #f2f2f2; font-size: 20px">
+                <div class="comment__body" style="display: flex">
+                    <div>
+                        <div class="comment__user" style="display: inline">
+                            <a class="user" href="#" target="_blank">
+                                {% if reply.author.image %}
+                                    <img src="{{ reply.author.image.url }}" alt=""
+                                         class="image-loaded avatar avatar_small">
+                                {% else %}
+                                    <img src="{% static 'img/baseavatar.jpg' %}" alt=""
+                                         class="image-loaded avatar avatar_small">
+                                {% endif %}
+                            </a>
+                            <a href="#" target="_blank">
+                                        <span class="comment__content">
+                                            {{ reply.author }}
+                                        </span>
+                            </a>
+                        </div>
+                        <div style="display: inline">
+                            <time datetime="{{ reply.created_at }}"
+                                  class="comment__datetime"
+                                  style="margin-left: 8px;">{{ reply.created_at }}</time>
+                        </div>
+                    </div>
+                    {% if show_add_button %}
+                        <div style="margin-left: auto;">
+                            {% if reply.is_accepted %}
+                                <a class="btn" href="#">✔</a>
+                            {% else %}
+                                <a style="color: var(--color-black-700);"
+                                   href="{% url 'posts:reply_accept' reply.id %}">
+                                    Принять
+                                </a>
+                            {% endif %}
+                            <a style="color: var(--color-black-700);"
+                               href="{% url 'posts:reply_delete' reply.id %}">Удалить</a>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="comment__content">
+                    {% if is_profile %}
+                        <a href="?post_filter={{ reply.post.id }}" style="font-size: 15px; color: #0b0c2a">
+                            <img src="{% static 'img/filter.png' %}" alt="" width="15"
+                                 title="Фильтровать отзывы по этой публикации">
+                            {{ reply.post|truncatechars:30 }}
+                        </a>
+                    {% else %}
+                        <a href="{% url 'posts:post_detail' reply.post.id %}" style="font-size: 15px; color: #0b0c2a">
+                            {{ reply.post|truncatechars:30 }}
+                        </a>
+                    {% endif %}
+                    <p>{{ reply.content }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="padding" style="text-align: center; color: white">
+        <!-- Пагинация -->
+        {% if replies and show_add_button %}
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center my-4">
+                    <div class="custom-shadow d-flex">
+
+                        <li class="page-item {% if not replies.has_previous %}disabled{% endif %}">
+                            <a class="page-link" href="{% if replies.has_previous %}?
+                                {% change_params page=replies.previous_page_number %}{% else %}#{% endif %}">Назад</a>
+                        </li>
+
+                        {% for page in replies.paginator.page_range %}
+                            {% if page >= replies.number|add:-2 and page <= replies.number|add:2 %}
+                                <li class="page-item {% if replies.number == page %} active {% endif %}">
+                                    <a class="page-link" href="?{% change_params page=page %}">{{ page }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+
+                        <li class="page-item {% if not replies.has_next %}disabled{% endif %}">
+                            <a class="page-link" href="{% if replies.has_next %}?
+                                {% change_params page=replies.next_page_number %}{% else %}#{% endif %}">Следующая</a>
+                        </li>
+                    </div>
+                </ul>
+            </nav>
+        {% endif %}
+    </div>
+
+</section>

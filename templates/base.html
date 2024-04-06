@@ -3,6 +3,7 @@
 
 {% load static %}
 {% load custom_tags %}
+{% load cache %}
 
 {% get_all_category as categories %}
 
@@ -33,6 +34,9 @@
 
     <!-- Template Main CSS File -->
     <link href="{% static 'css/app.css' %}" rel="stylesheet">
+    
+    <!-- CKEditor 5 -->
+    <script async charset="utf-8" src="//cdn.embedly.com/widgets/platform.js"></script>
 
 </head>
 
@@ -61,7 +65,7 @@
                             <li><a href="#">Категории<span class="arrow_carrot-down"></span></a>
                                 <ul class="dropdown">
                                     {% for category in categories %}
-                                        <li><a href="?category={{ category.id }}">{{ category.name }}</a></li>
+                                        <li><a href="/?category={{ category.id }}">{{ category.name }}</a></li>
                                     {% endfor %}
                                 </ul>
                             </li>
@@ -128,6 +132,19 @@
 <script src="{% static 'js/owl.carousel.min.js' %}"></script>
 <script src="{% static 'js/main.js' %}"></script>
 
+<!-- CKEditor -->
+<script>
+    document.querySelectorAll( 'oembed[url]' ).forEach( element => {
+        // Create the <a href="..." class="embedly-card"></a> element that Embedly uses
+        // to discover the media.
+        const anchor = document.createElement( 'a' );
+
+        anchor.setAttribute( 'href', element.getAttribute( 'url' ) );
+        anchor.className = 'embedly-card';
+
+        element.appendChild( anchor );
+    } );
+</script>
 </body>
 
 </html>

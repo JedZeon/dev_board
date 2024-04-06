@@ -1,11 +1,12 @@
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 from posts.forms import PostForm, ReplyForm
-from posts.models import Post, Category, PostLikes, Reply
-from posts.utils import q_search
+from posts.models import Post, Category, PostLikes, Reply, ViewPosts
+from posts.utils import q_search, get_client_ip
 
 from django.core.cache import cache  # импортируем наш кэш
 
@@ -15,6 +16,7 @@ class PostList(ListView):
     template_name = 'posts/post_list.html'
     ordering = '-created_at'
     paginate_by = 5
+    queryset = Post.objects.filter(is_news=False)
 
     def get_context_data(self, **kwargs):
 
@@ -26,12 +28,23 @@ class PostList(ListView):
 
         if category:
             context['title'] = Category.objects.get(id=category)
-            context['post_list'] = Post.objects.filter(category__id=category)
+            context['post_list'] = Post.objects.filter(category__id=category, is_news=False)
 
         elif query:
             context['post_list'] = q_search(query)
 
+        context['news_list'] = Post.objects.filter(is_news=True)
+
+        # отзывы
+        page_reply = self.request.GET.get("page_reply", 1)
+        replies = Reply.objects.filter(is_accepted=True).order_by('-created_at')
+        pagination = Paginator(replies, 5)
+        current_page = pagination.page(int(page_reply))
+        context['replies'] = current_page
+
         return context
+
+    # def get_o
 
 
 class PostCreate(CreateView):
@@ -82,6 +95,9 @@ class PostDelete(DeleteView):
     success_url = '/'
     pk_url_kwarg = 'post_id'
 
+    def get_success_url(self):
+        return reverse('posts:index')
+
 
 class PostDetail(DetailView):
     model = Post
@@ -90,6 +106,14 @@ class PostDetail(DetailView):
     pk_url_kwarg = 'post_id'
 
     def get_object(self, *args, **kwargs):
+        # Получение ip просматривающего и регистрация его как просмотревшего публикацию
+        ip = get_client_ip(self.request)
+        post = Post.objects.get(id=self.kwargs['post_id'])
+        pk = post.pk
+
+        if not ViewPosts.objects.filter(ip_address=ip, post_id=pk).exists():
+            ViewPosts.objects.create(ip_address=ip, post_id=pk)
+
         obj = cache.get(f'post-{self.kwargs["post_id"]}', None)
 
         # если объекта нет в кэше, то получаем его и записываем в кэш
@@ -106,6 +130,9 @@ class PostDetail(DetailView):
 
         context['post'] = post
         context['is_authors'] = post.author = self.request.user
+
+        context['replies'] = Reply.objects.filter(post_id=post.id, is_accepted=True)
+
         return context
 
 
@@ -161,6 +188,8 @@ def reply_add(request, post_id, **kwargs):
             reply = form.save(commit=False)
             reply.post = Post.objects.get(id=post_id)
             reply.author = request.user
+            if request.user == reply.post.author:
+                reply.is_accepted = True
             reply.save()
             return HttpResponseRedirect(reverse('posts:post_detail', args=[reply.post.id]))
     else:

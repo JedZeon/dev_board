@@ -18,7 +18,14 @@
                             <a class="story__user-link user__nick" href="#">
                                 <div class="avatar avatar_small">
                                 <span class="avatar__inner">
-                                    <img src="{% static 'img/baseavatar.jpg' %}" alt="" class="image-loaded">
+                                    {% if post.author.image %}
+                                        <img src="{{ post.author.image.url }}" alt=""
+                                             class="image-loaded avatar avatar_small">
+                                    {% else %}
+                                        <img src="{% static 'img/baseavatar.jpg' %}" alt=""
+                                             class="image-loaded avatar avatar_small">
+                                    {% endif %}
+
                                 </span>
                                 </div>
                                 {{ post.author }}
@@ -77,6 +84,18 @@
                     </form>
                 </div>
             </div>
+            <!-- Отзывы -->
+            <div style="margin-top: 10px">
+                <div class=" bg-white p-4 mb-4 mx-2 rounded custom-shadow">
+                    <h3 class="text-center mb-4">Отзывы</h3>
+                    <div class="container" id="cart-items-container">
+
+                        {% include 'includes/replies_post.html' %}
+
+                    </div>
+                </div>
+            </div>
+
         </div>
     </article>
 {% endblock content %}

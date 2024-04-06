@@ -66,7 +66,7 @@ def registration(request):
                 request,
                 f"{user.username}, Вам на почту отправлено письмо с кодом подтверждения регистрации, проверьте почту"
             )
-            return HttpResponseRedirect(reverse('user:request_code', args=(user.username, )))
+            return HttpResponseRedirect(reverse('user:request_code', args=(user.username,)))
 
     else:
         form = UserRegistrationForm()
@@ -82,6 +82,7 @@ def registration(request):
 def profile(request):
     page = request.GET.get("page", 1)
     page_reply = request.GET.get("page_reply", 1)
+    post_filter = request.GET.get("post_filter", None)
 
     if request.method == 'POST':
         form = ProfileForm(data=request.POST, instance=request.user, files=request.FILES)
@@ -93,7 +94,11 @@ def profile(request):
         form = ProfileForm(instance=request.user)
 
     # отзывы
-    replies = Reply.objects.filter(post__author=request.user).order_by('-created_at')
+    if post_filter:
+        replies = Reply.objects.filter(post__author=request.user, post_id=post_filter).order_by('-created_at')
+        post = Post.objects.get(id=post_filter)
+    else:
+        replies = Reply.objects.filter(post__author=request.user).order_by('-created_at')
     pagination = Paginator(replies, 5)
     current_page = pagination.page(int(page_reply))
 
@@ -107,8 +112,12 @@ def profile(request):
         'replies': current_page,
         'page_obj': pagination,
         'show_add_button': True,
-        'posts': current_page_posts,
+        'post_list': current_page_posts,
+        'is_profile': True
     }
+    if post_filter:
+        context['post'] = post
+
     return render(request, 'users/profile.html', context)
 
 

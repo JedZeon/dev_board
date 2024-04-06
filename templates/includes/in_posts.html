@@ -2,14 +2,15 @@
 {% load custom_tags %}
 
 {% if post_list %}
-{% for post in post_list %}
-<article>
-    <div class="story__main">
-        <header class="story__header">
-            <div class="story__user">
-                <div class="story__user-info">
-                    <a class="story__user-link user__nick" href="#">
-                        <div class="avatar avatar_small">
+    {{ form.media }}
+    {% for post in post_list %}
+        <article>
+            <div class="story__main" style="margin-top: 5px">
+                <header class="story__header">
+                    <div class="story__user">
+                        <div class="story__user-info">
+                            <a class="story__user-link user__nick" href="#">
+                                <div class="avatar avatar_small">
                                     <span class="avatar__inner">
                                         {% if post.author.image %}
                                             <img src="{{ post.author.image.url }}" alt=""
@@ -19,113 +20,113 @@
                                                  class="image-loaded avatar avatar_small">
                                         {% endif %}
                                     </span>
+                                </div>
+                                {{ post.author }}
+                            </a>
+                            <div>
+                                <time datetime="{{ post.created_at }}"
+                                      class="caption story__datetime">{{ post.created_at }}
+                                </time>
+                            </div>
+                            <a class="story__user-link user__nick"
+                               href="{{ post.category.id }}">{{ post.category }}</a>
                         </div>
-                        {{ post.author }}
-                    </a>
-                    <div>
-                        <time datetime="{{ post.created_at }}"
-                              class="caption story__datetime">{{ post.created_at }}
-                        </time>
                     </div>
-                    <a class="story__user-link user__nick"
-                       href="{{ post.category.id }}">{{ post.category }}</a>
-                </div>
-            </div>
-            <h4 class="story__title">
-                <a href="{% url 'posts:post_detail' post.id %}">
-                    {% if post.headline %}
-                    {% autoescape off %}
-                    {{ post.headline }}
-                    {% endautoescape %}
-                    {% else %}
-                    {{ post.title }}
-                    {% endif %}
-                </a>
-            </h4>
-        </header>
-        <div class="story__content-wrapper">
-            <div class="story__content story__typography" style="display: block">
-                <div class="story__content-inner">
-                    <div class="story-block story-block_type_text">
-                        <p>
-                            {% if post.bodyline %}
-                            {% autoescape off %}
-                            {{ post.bodyline|truncatewords:20|safe }}
-                            {% endautoescape %}
+                    <h4 class="story__title">
+                        <a href="{% url 'posts:post_detail' post.id %}">
+                            {% if post.headline %}
+                                {% autoescape off %}
+                                    {{ post.headline }}
+                                {% endautoescape %}
                             {% else %}
-                            {{ post.content|truncatewords:20|safe }}
+                                {{ post.title }}
                             {% endif %}
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="story__footer">
-                <div class="story__tools" style="font-size: 1rem; line-height: 1.5;">
-                    <div class="comment">
-                        <a style="color: var(--color-black-700);"
-                           href="{% url 'posts:post_detail' post.id %}#replies">
-                            <i class="fa fa-comments"></i>
-                            <span style="margin-left: 10px; line-height: 15px;"> {{ post.get_reply_count }} </span>
                         </a>
+                    </h4>
+                </header>
+                <div class="story__content-wrapper">
+                    <div class="story__content story__typography" style="display: block">
+                        <div class="story__content-inner">
+                            <div class="story-block story-block_type_text">
+                                <p>
+                                    {% if post.bodyline %}
+                                        {% autoescape off %}
+                                            {{ post.bodyline|truncatewords:20|safe }}
+                                        {% endautoescape %}
+                                    {% else %}
+                                        {{ post.content|truncatewords:20|safe }}
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="view">
-                        <i style="margin-left: 10px;" class="fa fa-eye"></i>
-                        <span style="margin-left: 10px; line-height: 15px;"
-                              class="story__views-count">{{ post.get_view_count }}</span>
-                    </div>
-                    <div>
-                        <a style="color: var(--color-black-700);"
-                           href="post/{{ post.id }}/like/">
-                            <i style="margin-left: 10px;" class="fa fa-caret-up"></i>
-                            <span style="margin-left: 5px;">{{ post.rating }}</span>
-                        </a>
+                    <div class="story__footer">
+                        <div class="story__tools" style="font-size: 1rem; line-height: 1.5;">
+                            <div class="comment">
+                                <a style="color: var(--color-black-700);"
+                                   href="{% url 'posts:post_detail' post.id %}#replies">
+                                    <i class="fa fa-comments"></i>
+                                    <span style="margin-left: 10px; line-height: 15px;"> {{ post.get_reply_count }} </span>
+                                </a>
+                            </div>
+                            <div class="view">
+                                <i style="margin-left: 10px;" class="fa fa-eye"></i>
+                                <span style="margin-left: 10px; line-height: 15px;"
+                                      class="story__views-count">{{ post.get_view_count }}</span>
+                            </div>
+                            <div>
+                                <a style="color: var(--color-black-700);"
+                                   href="post/{{ post.id }}/like/">
+                                    <i style="margin-left: 10px;" class="fa fa-caret-up"></i>
+                                    <span style="margin-left: 5px;">{{ post.rating }}</span>
+                                </a>
 
+                            </div>
+                            <div>
+                                <a style="color: var(--color-black-700);"
+                                   href="post/{{ post.id }}/dislike/">
+                                    <i style="margin-left: 10px;" class="fa fa-caret-down"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div>
+                            <a href="{% url 'posts:post_detail' post.id %}">Просмотреть</a>
+                        </div>
                     </div>
-                    <div>
-                        <a style="color: var(--color-black-700);"
-                           href="post/{{ post.id }}/dislike/">
-                            <i style="margin-left: 10px;" class="fa fa-caret-down"></i>
-                        </a>
-                    </div>
-                </div>
-                <div>
-                    <a href="{% url 'posts:post_detail' post.id%}">Просмотреть</a>
                 </div>
             </div>
-        </div>
+        </article>
+
+    {% endfor %}
+    <div class="padding" style="text-align: center; color: white">
+        <!-- Пагинация -->
+        {# Добавляем пагинацию на страницу #}
+
+        {# Переход к 1 странице #}
+        <a title="Первая страница" href="?{% url_replace page=1 %}"> << </a>
+
+        {% if page_obj.has_previous %}
+            {# Для каждой ссылки пагинации указываем обработку через новый тег #}
+            <a href="?{% url_replace page=1 %}">1</a>
+            {% if page_obj.previous_page_number != 1 %}
+                ...
+                <a href="?{% url_replace page=page_obj.previous_page_number %}">{{ page_obj.previous_page_number }}</a>
+            {% endif %}
+        {% endif %}
+
+        {{ page_obj.number }}
+
+        {% if page_obj.has_next %}
+            <a href="?{% url_replace page=page_obj.next_page_number %}">{{ page_obj.next_page_number }}</a>
+            {% if paginator.num_pages != page_obj.next_page_number %}
+                ...
+                <a href="?{% url_replace page=page_obj.paginator.num_pages %}">{{ page_obj.paginator.num_pages }}</a>
+            {% endif %}
+        {% endif %}
+
+        {# Переход к последней странице #}
+        <a href="?{% url_replace page=page_obj.paginator.num_pages %}"> >> </a>
     </div>
-</article>
-
-{% endfor %}
-<div class="padding" style="text-align: center; color: white">
-    <!-- Пагинация -->
-    {# Добавляем пагинацию на страницу #}
-
-    {# Переход к 1 странице #}
-    <a title="Первая страница" href="?{% url_replace page=1 %}"> << </a>
-
-    {% if page_obj.has_previous %}
-    {# Для каждой ссылки пагинации указываем обработку через новый тег #}
-    <a href="?{% url_replace page=1 %}">1</a>
-    {% if page_obj.previous_page_number != 1 %}
-    ...
-    <a href="?{% url_replace page=page_obj.previous_page_number %}">{{ page_obj.previous_page_number }}</a>
-    {% endif %}
-    {% endif %}
-
-    {{ page_obj.number }}
-
-    {% if page_obj.has_next %}
-    <a href="?{% url_replace page=page_obj.next_page_number %}">{{ page_obj.next_page_number }}</a>
-    {% if paginator.num_pages != page_obj.next_page_number %}
-    ...
-    <a href="?{% url_replace page=page_obj.paginator.num_pages %}">{{ page_obj.paginator.num_pages }}</a>
-    {% endif %}
-    {% endif %}
-
-    {# Переход к последней странице #}
-    <a href="?{% url_replace page=page_obj.paginator.num_pages %}"> >> </a>
-</div>
 {% else %}
-<h2 style="color: white">Публикаций нет!</h2>
+    <h2 style="color: white">Публикаций нет!</h2>
 {% endif %}
